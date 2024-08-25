@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, UseDispatch } from 'react-redux';
+import {signInStart,signInSuccess,signInFailure} from  'redux/user/userSlice'
 
 
 export default function SignIn() {
@@ -7,6 +9,7 @@ export default function SignIn() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); 
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -19,7 +22,7 @@ export default function SignIn() {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      dispatch(signInStart());
 
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
@@ -87,7 +90,7 @@ export default function SignIn() {
 
       <div className="flex gap-2 mt-5">
         <p>Dont have an account?</p>
-        <Link to="/sign-in">
+        <Link to="/sign-up">
           <span className="text-blue-700">Sign up</span>
         </Link>
       </div>
